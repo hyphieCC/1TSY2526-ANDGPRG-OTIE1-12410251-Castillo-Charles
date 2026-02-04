@@ -2,18 +2,23 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public Transform tip;
-    public Transform leftWing;
-    public Transform rightWing;
+    [Header("Muzzles")]
+    [SerializeField] private Transform tip;
+    [SerializeField] private Transform leftWing;
+    [SerializeField] private Transform rightWing;
 
-    public GameObject[] bulletPrefabs = new GameObject[4];
+    [Header("Bullets (0=Single, 1=Spread, 2=Burst, 3=Dual)")]
+    [SerializeField] private GameObject[] bulletPrefabs = new GameObject[4];
 
-    public float[] fireRates = new float[4];
+    [Header("Fire Rates (shots/sec)")]
+    [SerializeField] private float[] fireRates = new float[4];
 
-    public float spreadAngle;
+    [Header("Spread")]
+    [SerializeField] private float spreadAngle = 12f;
 
-    public int burstCount;
-    public float burstGap;
+    [Header("Burst")]
+    [SerializeField] private int burstCount = 4;
+    [SerializeField] private float burstGap = 0.08f;
 
     int mode = 0;
     float nextShotTime = 0f;
@@ -22,7 +27,12 @@ public class PlayerShooting : MonoBehaviour
     int burstShotsLeft = 0;
     float nextBurstShotTime = 0f;
 
-    string[] modeNames =
+    // Temporary mode support
+    int baseModeBeforeTemp = 0;
+    float tempModeEnd = -1f;
+    bool tempActive = false;
+
+    readonly string[] modeNames =
     {
         "Single (1)",
         "Spread (2)",
@@ -30,29 +40,28 @@ public class PlayerShooting : MonoBehaviour
         "Dual Wing (4)"
     };
 
+    void Start()
+    {
+        // Ensure UI shows correct starting mode
+        SetMode(0);
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) 
-        { 
-            mode = 0; 
-            GameManagerUI.Instance?.SetMode(modeNames[mode]); 
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) 
-        { 
-            mode = 1; 
-            GameManagerUI.Instance?.SetMode(modeNames[mode]); 
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) 
-        { 
-            mode = 2; 
-            GameManagerUI.Instance?.SetMode(modeNames[mode]); 
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) 
-        { 
-            mode = 3; 
-            GameManagerUI.Instance?.SetMode(modeNames[mode]); 
+        // Hotkeys
+        //if (Input.GetKeyDown(KeyCode.Alpha1)) SetMode(0);
+        //if (Input.GetKeyDown(KeyCode.Alpha2)) SetMode(1);
+        //if (Input.GetKeyDown(KeyCode.Alpha3)) SetMode(2);
+        //if (Input.GetKeyDown(KeyCode.Alpha4)) SetMode(3);
+
+        // Temporary powerup expiry
+        if (tempActive && Time.time >= tempModeEnd)
+        {
+            tempActive = false;
+            SetMode(baseModeBeforeTemp);
         }
 
+        // Burst continues even if player releases space (feels better)
         if (bursting)
             UpdateBurst();
 
@@ -60,13 +69,40 @@ public class PlayerShooting : MonoBehaviour
             TryFire();
     }
 
+    public int CurrentMode => mode;
+
+    public void SetMode(int newMode)
+    {
+        mode = Mathf.Clamp(newMode, 0, 3);
+        GameManagerUI.Instance?.SetMode(modeNames[mode]);
+    }
+
+    public void StartTemporaryMode(int newMode, float duration)
+    {
+        // If we weren't already in a temp powerup, remember what to revert to.
+        if (!tempActive)
+            baseModeBeforeTemp = mode;
+
+        tempActive = true;
+        tempModeEnd = Time.time + duration;
+
+        SetMode(newMode);
+    }
+
     void TryFire()
     {
         if (bursting) return;
 
-        float interval = 1f / fireRates[mode];
+        float rate = fireRates[mode];
+        if (rate <= 0f) return;
+
+        float interval = 1f / rate;
         if (Time.time < nextShotTime) return;
+
         nextShotTime = Time.time + interval;
+
+        // Play shoot SFX once per successful trigger
+        AudioManager.Instance?.PlaySfx(AudioManager.Instance.shootClip);
 
         switch (mode)
         {
@@ -108,7 +144,9 @@ public class PlayerShooting : MonoBehaviour
     {
         if (Time.time < nextBurstShotTime) return;
 
+        // For burst, still shoot from tip with burst bullet
         Spawn(bulletPrefabs[2], tip.position, tip.rotation);
+        AudioManager.Instance?.PlaySfx(AudioManager.Instance.shootClip);
 
         burstShotsLeft--;
         if (burstShotsLeft <= 0)
@@ -122,6 +160,7 @@ public class PlayerShooting : MonoBehaviour
 
     void Spawn(GameObject prefab, Vector3 pos, Quaternion rot)
     {
+        if (!prefab) return;
         Instantiate(prefab, pos, rot);
     }
 }

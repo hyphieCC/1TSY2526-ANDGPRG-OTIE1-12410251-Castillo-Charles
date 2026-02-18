@@ -1,0 +1,16 @@
+Controls for Midterms:
+
+WASD - Movement
+Shift - Sprint
+Control - Sneak
+
+F - Start Steal Sequence
+Space - Quick Time Event Button
+
+(Bar at the top is an 'Alert', if this bar fills out, then you are 'caught' and lose the game)
+
+(Walking will slowly gain Alert, Running will moderately gain Alert, Sneaking will not gain any Alert)
+
+(Failing to steal (not pressing Space in time) will raise the Alert by a great amount)
+
+(Guards and Spotlight will only raise your Alert if you are in their line of sight)

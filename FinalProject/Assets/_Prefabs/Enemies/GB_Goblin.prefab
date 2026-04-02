@@ -776,10 +776,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossGroundEnemy
   enemyType: 0
-  maxHp: 25
+  maxHp: 30
   currentHp: 0
   coreDamage: 5
-  goldReward: 5
+  goldReward: 50
+  slowMultiplier: 1
+  slowTimer: 0
+  burnTimer: 0
+  burnTickTimer: 0
+  burnDamagePerTick: 0
+  burnTickInterval: 1
+  baseMoveSpeed: 3.5
 --- !u!1 &3616587165273636167
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,8 +23,10 @@ public class FlyingEnemy : Enemy
         base.InitMonster(targetPoint, hpMultiplier);
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         Vector3 currentTarget;
 
         if (waypointIndex < waypoints.Length)
@@ -46,7 +48,7 @@ public class FlyingEnemy : Enemy
         if (direction.magnitude > 0.05f)
         {
             Vector3 moveDir = direction.normalized;
-            transform.position += moveDir * speed * Time.deltaTime;
+            transform.position += moveDir * speed * slowMultiplier * Time.deltaTime;
             transform.forward = moveDir;
         }
     }

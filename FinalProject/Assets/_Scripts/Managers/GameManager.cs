@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [System.Serializable]
 public class CoreData
@@ -20,6 +21,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] CoreData coreData;
+    [SerializeField] TMP_Text currentWave;
+
+    [Header("Gold")]
+    [SerializeField] int startingGold = 300;
+    [SerializeField] TMP_Text goldText;
+    int currentGold;
 
     public Transform GetCoreTransform() { return coreData.coreTransform; }
 
@@ -27,7 +34,10 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         coreData.curlife = coreData.maxLife;
+        currentGold = startingGold;
+
         UpdateLifeBar();
+        UpdateGoldUI();
     }
 
     public void CoreTakeDamage(int damage)
@@ -42,6 +52,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public int GetGold()
+    {
+        return currentGold;
+    }
+
+    public void AddGold(int amount)
+    {
+        currentGold += amount;
+        UpdateGoldUI();
+        //Debug.Log("Gold Added: " + amount + " | Current Gold: " + currentGold);
+    }
+
+    public bool SpendGold(int amount)
+    {
+        if (currentGold < amount)
+        {
+            return false;
+        }
+
+        currentGold -= amount;
+        UpdateGoldUI();
+        //Debug.Log("Gold Spent: " + amount + " | Current Gold: " + currentGold);
+        return true;
+    }
+
     void GameOver()
     {
         Debug.Log("GameOver");
@@ -50,5 +85,18 @@ public class GameManager : MonoBehaviour
     void UpdateLifeBar()
     {
         coreData.lifeBar.fillAmount = coreData.curlife / coreData.maxLife;
+    }
+
+    void UpdateGoldUI()
+    {
+        if (goldText != null)
+        {
+            goldText.text = "Gold: " + currentGold;
+        }
+    }
+
+    public void UpdateWaveUI(int wave)
+    {
+        currentWave.text = "Wave: " + wave;
     }
 }

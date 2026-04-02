@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class BossGroundEnemy : GroundEnemy
 {
-    protected override void Start()
+    protected override void Awake()
     {
-        maxHp = 30f;
-        coreDamage = 3;
-        goldReward = 10;
+        base.Awake();
 
-        base.Start();
+        maxHp = 30f;
+        coreDamage = 5;
+        goldReward = 50;
     }
 }

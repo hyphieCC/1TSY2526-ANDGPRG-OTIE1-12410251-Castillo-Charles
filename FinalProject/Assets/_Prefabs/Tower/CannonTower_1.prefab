@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5645802795658541044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2634934462014511581}
+  - component: {fileID: 5173086231946275935}
+  - component: {fileID: 3552785172143154510}
+  m_Layer: 0
+  m_Name: CannonTower_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2634934462014511581
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5645802795658541044}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 27.782421, y: -0.603, z: 1.085}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5090692578842076589}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5173086231946275935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5645802795658541044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1212a641ca20469448f5992ee1e1d94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseTower
+  towerMat: {fileID: 2100000, guid: bbb4051decb9e9948a72ba2d33fc5949, type: 2}
+  towerRenderers:
+  - {fileID: 5090692578844370763}
+  - {fileID: 5090692578844370761}
+--- !u!114 &3552785172143154510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5645802795658541044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac0285be97a8066479544e99c14a2d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CannonTower
+  range: 7
+  attackRate: 3
+  canTargetGround: 1
+  canTargetFlying: 0
+  pivot: {fileID: 5090692578842076589}
+  rotateSpeed: 8
+  damage: 15
+  splashRadius: 2.5
+  splashDamage: 7
+  cannonProjectilePrefab: {fileID: 7222945794459315084, guid: 54009b10493c5674690051958bd118fc, type: 3}
+  shootPoint: {fileID: 5090692578842076585}
+--- !u!1001 &5090692578842476329
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2634934462014511581}
+    m_Modifications:
+    - target: {fileID: 100004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_Name
+      value: Tow_Cannon1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c750f9054cec93740b96cb359da73074, type: 3}
+--- !u!4 &5090692578842076585 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: c750f9054cec93740b96cb359da73074, type: 3}
+  m_PrefabInstance: {fileID: 5090692578842476329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5090692578842076589 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+  m_PrefabInstance: {fileID: 5090692578842476329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5090692578844370761 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: c750f9054cec93740b96cb359da73074, type: 3}
+  m_PrefabInstance: {fileID: 5090692578842476329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5090692578844370763 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300002, guid: c750f9054cec93740b96cb359da73074, type: 3}
+  m_PrefabInstance: {fileID: 5090692578842476329}
+  m_PrefabAsset: {fileID: 0}

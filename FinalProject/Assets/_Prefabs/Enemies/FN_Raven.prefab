@@ -89,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 966271965857768051}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -422,7 +422,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlyingEnemy
   enemyType: 1
+  maxHp: 5
+  currentHp: 0
+  coreDamage: 1
+  goldReward: 15
+  slowMultiplier: 1
+  slowTimer: 0
+  burnTimer: 0
+  burnTickTimer: 0
+  burnDamagePerTick: 0
+  burnTickInterval: 1
   speed: 4
+  reachDistance: 0.3
 --- !u!54 &2729845025912757996
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -4,11 +4,24 @@ using UnityEngine.AI;
 public class GroundEnemy : Enemy
 {
     NavMeshAgent agent;
+    [SerializeField] float baseMoveSpeed = 3.5f;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         enemyType = EnemyType.Ground;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        agent.speed = baseMoveSpeed;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        agent.speed = baseMoveSpeed * slowMultiplier;
     }
 
     public override void InitMonster(Vector3 targetPoint, float hpMultiplier)

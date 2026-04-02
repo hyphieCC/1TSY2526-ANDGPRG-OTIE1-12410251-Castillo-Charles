@@ -41,6 +41,7 @@ public class EnemySpawnerController : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenWaves);
 
         currentWave++;
+        GameManager.Instance.UpdateWaveUI(currentWave);
         isSpawningWave = true;
 
         int enemiesLeftToSpawn = baseEnemiesPerWave + (currentWave - 1) * 2;
@@ -128,5 +129,10 @@ public class EnemySpawnerController : MonoBehaviour
         );
 
         return newPos;
+    }
+
+    public int GetCurrentWave()
+    {
+        return currentWave;
     }
 }

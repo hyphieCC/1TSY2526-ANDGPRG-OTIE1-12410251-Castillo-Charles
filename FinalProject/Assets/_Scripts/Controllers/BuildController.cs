@@ -1,0 +1,116 @@
+using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class BuildController : MonoBehaviour
+{
+    float buildOffsetY = 2.1f;
+    [SerializeField] RaycastHit hit;
+    [SerializeField] Ray ray;
+
+    [SerializeField] GameObject[] prefabTower;
+    GameObject draggableTower;
+    BaseTower tempTower;
+    Tower tempCombatTower;
+
+    public bool IsBuilding()
+    {
+        return draggableTower != null;
+    }
+
+    public void CreateTower(int index)
+    {
+        if (draggableTower != null)
+        {
+            CancelCurrentBuild();
+        }
+
+        int cost = BuildUIController.Instance.GetTowerCost(index);
+
+        if (GameManager.Instance.GetGold() < cost)
+        {
+            return;
+        }
+
+        GameObject tempTowerObj = Instantiate(prefabTower[index], hit.point, Quaternion.identity);
+        draggableTower = tempTowerObj;
+        tempTower = tempTowerObj.GetComponent<BaseTower>();
+        tempCombatTower = tempTowerObj.GetComponent<Tower>();
+
+        BuildUIController.Instance.ShowCancelButton(true);
+    }
+
+    public void CancelCurrentBuild()
+    {
+        if (draggableTower == null)
+        {
+            return;
+        }
+
+        Destroy(draggableTower);
+        draggableTower = null;
+        tempTower = null;
+        tempCombatTower = null;
+
+        BuildUIController.Instance.ShowCancelButton(false);
+    }
+
+    Vector3 SnapToGrid(Vector3 towerPos)
+    {
+        return new Vector3(
+            MathF.Round(towerPos.x),
+            towerPos.y,
+            Mathf.Round(towerPos.z)
+        );
+    }
+
+    void Update()
+    {
+        if (draggableTower == null)
+        {
+            return;
+        }
+
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            draggableTower.transform.position = SnapToGrid(hit.point);
+
+            if (hit.point.y > buildOffsetY)
+            {
+                tempTower.Buildable();
+
+                if (Input.GetMouseButtonDown(1))
+                {
+                    CancelCurrentBuild();
+                    return;
+                }
+
+                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+                {
+                    int cost = BuildUIController.Instance.GetTowerCost((int)BuildUIController.Instance.selectedTower);
+
+                    if (!GameManager.Instance.SpendGold(cost))
+                    {
+                        return;
+                    }
+
+                    tempTower.Build();
+                    tempCombatTower.BuildTower();
+
+                    draggableTower = null;
+                    tempTower = null;
+                    tempCombatTower = null;
+
+                    BuildUIController.Instance.ShowCancelButton(false);
+                    return;
+                }
+            }
+            else
+            {
+                tempTower.NonBuildable();
+            }
+        }
+    }
+}

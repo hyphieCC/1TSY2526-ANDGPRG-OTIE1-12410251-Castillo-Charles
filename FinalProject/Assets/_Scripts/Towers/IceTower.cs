@@ -17,4 +17,74 @@ public class IceTower : Tower
 
         iceProjectile.SetIceProjectile(target, slowMultiplier, slowDuration);
     }
+
+    public override string GetTowerName()
+    {
+        return "Ice Tower";
+    }
+
+    public override string GetStatsText()
+    {
+        return "Level: " + GetTotalLevel() +
+               "\nSlow Multiplier: " + slowMultiplier +
+               "\nSlow Duration: " + slowDuration +
+               "\nRange: " + range;
+    }
+
+    public override string GetUpgradeOptionAText()
+    {
+        if (upgradeALevel == 1)
+        {
+            return "+ Stronger Slow";
+        }
+        else if (upgradeALevel == 2)
+        {
+            return "++ Stronger Slow";
+        }
+
+        return "Maxed";
+    }
+
+    public override string GetUpgradeOptionBText()
+    {
+        if (upgradeBLevel == 1)
+        {
+            return "+ Longer Slow";
+        }
+        else if (upgradeBLevel == 2)
+        {
+            return "++ Longer Slow";
+        }
+
+        return "Maxed";
+    }
+
+    protected override void ApplyUpgradeA()
+    {
+        if (upgradeALevel == 1)
+        {
+            slowMultiplier -= 0.1f;
+        }
+        else if (upgradeALevel == 2)
+        {
+            slowMultiplier -= 0.15f;
+        }
+
+        if (slowMultiplier < 0.2f)
+        {
+            slowMultiplier = 0.2f;
+        }
+    }
+
+    protected override void ApplyUpgradeB()
+    {
+        if (upgradeBLevel == 1)
+        {
+            slowDuration += 0.5f;
+        }
+        else if (upgradeBLevel == 2)
+        {
+            slowDuration += 1f;
+        }
+    }
 }

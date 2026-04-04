@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 
 public class BuildController : MonoBehaviour
 {
+    public static BuildController Instance;
+
     float buildOffsetY = 2.1f;
     [SerializeField] RaycastHit hit;
     [SerializeField] Ray ray;
@@ -12,6 +14,16 @@ public class BuildController : MonoBehaviour
     GameObject draggableTower;
     BaseTower tempTower;
     Tower tempCombatTower;
+
+    [Header("Build Check")]
+    [SerializeField] LayerMask towersLayer;
+    [SerializeField] LayerMask surfaceLayer;
+    [SerializeField] float checkRadius = 2f;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public bool IsBuilding()
     {
@@ -64,6 +76,23 @@ public class BuildController : MonoBehaviour
         );
     }
 
+    bool IsSpotOccupied(Vector3 position)
+    {
+        Collider[] hits = Physics.OverlapSphere(position, checkRadius, towersLayer);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (draggableTower != null && hits[i].transform.root.gameObject == draggableTower)
+            {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     void Update()
     {
         if (draggableTower == null)
@@ -73,19 +102,23 @@ public class BuildController : MonoBehaviour
 
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, surfaceLayer))
         {
-            draggableTower.transform.position = SnapToGrid(hit.point);
+            Vector3 snappedPos = SnapToGrid(hit.point);
+            draggableTower.transform.position = snappedPos;
 
-            if (hit.point.y > buildOffsetY)
+            bool validHeight = hit.point.y > buildOffsetY;
+            bool occupied = IsSpotOccupied(snappedPos);
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                CancelCurrentBuild();
+                return;
+            }
+
+            if (validHeight && !occupied)
             {
                 tempTower.Buildable();
-
-                if (Input.GetMouseButtonDown(1))
-                {
-                    CancelCurrentBuild();
-                    return;
-                }
 
                 if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
                 {

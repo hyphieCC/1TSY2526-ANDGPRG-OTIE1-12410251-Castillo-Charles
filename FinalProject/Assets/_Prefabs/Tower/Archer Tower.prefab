@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2027153854089957756}
   - component: {fileID: 9137075453134299005}
   - component: {fileID: -1118474259528295354}
-  m_Layer: 0
-  m_Name: ArcherTower_1
+  - component: {fileID: -8882209481622222255}
+  m_Layer: 6
+  m_Name: Archer Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,6 +72,27 @@ MonoBehaviour:
   damage: 2
   arrowProjectilePrefab: {fileID: 2808003415598728402, guid: b1c981e35b80567448523459275340a8, type: 3}
   shootPoint: {fileID: 2604186116278432557}
+--- !u!65 &-8882209481622222255
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645187779727354977}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &2604186116278036909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79,9 +101,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2027153854089957756}
     m_Modifications:
+    - target: {fileID: 100000, guid: 606beed76a54f674d91e893392888a9b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 606beed76a54f674d91e893392888a9b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 606beed76a54f674d91e893392888a9b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 606beed76a54f674d91e893392888a9b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 606beed76a54f674d91e893392888a9b, type: 3}
       propertyPath: m_Name
       value: Tow_Crossbow1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 606beed76a54f674d91e893392888a9b, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 606beed76a54f674d91e893392888a9b, type: 3}
       propertyPath: m_LocalRotation.w

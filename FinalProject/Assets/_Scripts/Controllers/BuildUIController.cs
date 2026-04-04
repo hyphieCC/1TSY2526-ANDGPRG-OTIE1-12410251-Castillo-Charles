@@ -22,6 +22,10 @@ public class BuildUIController : MonoBehaviour
     [SerializeField] TMP_Text towerName;
     [SerializeField] TMP_Text towerText;
     [SerializeField] GameObject cancelBuildButton;
+    [SerializeField] TMP_Text arrowCostText;
+    [SerializeField] TMP_Text cannonCostText;
+    [SerializeField] TMP_Text iceCostText;
+    [SerializeField] TMP_Text fireCostText;
 
     [Header("Tower Costs")]
     [SerializeField] int arrowCost = 50;
@@ -33,6 +37,11 @@ public class BuildUIController : MonoBehaviour
     {
         Instance = this;
         ShowCancelButton(false);
+
+        arrowCostText.text = "Cost: " + arrowCost;
+        cannonCostText.text = "Cost: " + cannonCost;
+        iceCostText.text = "Cost: " + iceCost;
+        fireCostText.text = "Cost: " + fireCost;
     }
 
     public void SelectTower(int towerIndex)

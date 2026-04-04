@@ -14,6 +14,15 @@ public abstract class Tower : MonoBehaviour
     [SerializeField] protected Transform pivot;
     [SerializeField] protected float rotateSpeed = 8f;
 
+    [Header("Upgrading")]
+    [SerializeField] protected int upgradeALevel = 1;
+    [SerializeField] protected int upgradeBLevel = 1;
+    [SerializeField] protected int maxUpgradeLevel = 3;
+    [SerializeField] protected int upgradeABaseCost = 100;
+    [SerializeField] protected int upgradeAIncreasePerLevel = 150;
+    [SerializeField] protected int upgradeBBaseCost = 100;
+    [SerializeField] protected int upgradeBIncreasePerLevel = 150;
+
     protected float attackTimer;
     protected bool isBuilt = false;
     protected Enemy currentTarget;
@@ -47,6 +56,122 @@ public abstract class Tower : MonoBehaviour
     public void BuildTower()
     {
         isBuilt = true;
+    }
+
+    private void OnMouseDown()
+    {
+        if (!isBuilt)
+        {
+            return;
+        }
+
+        if (BuildController.Instance != null && BuildController.Instance.IsBuilding())
+        {
+            BuildController.Instance.CancelCurrentBuild();
+        }
+
+        TowerSelectionController.Instance.SelectTower(this);
+    }
+
+    public virtual string GetTowerName()
+    {
+        return "SELECTED TOWER";
+    }
+
+    public virtual string GetStatsText()
+    {
+        return "Level: " + GetTotalLevel() +
+            "\nRange: " + range +
+            "\nAttack Rate: " + attackRate +
+            "\nA Cost: " + GetUpgradeCostA() +
+            "\nB Cost: " + GetUpgradeCostB();
+    }
+
+    public int GetTotalLevel()
+    {
+        return upgradeALevel + upgradeBLevel - 1;
+    }
+
+    public int GetUpgradeALevel()
+    {
+        return upgradeALevel;
+    }
+
+    public int GetUpgradeBLevel()
+    {
+        return upgradeBLevel;
+    }
+
+    public int GetUpgradeCostA()
+    {
+        return upgradeABaseCost + (upgradeALevel - 1) * upgradeAIncreasePerLevel;
+    }
+
+    public int GetUpgradeCostB()
+    {
+        return upgradeBBaseCost + (upgradeBLevel - 1) * upgradeBIncreasePerLevel;
+    }
+
+    public bool CanUpgradeA()
+    {
+        return upgradeALevel < maxUpgradeLevel;
+    }
+
+    public bool CanUpgradeB()
+    {
+        return upgradeBLevel < maxUpgradeLevel;
+    }
+
+    public virtual string GetUpgradeOptionAText()
+    {
+        return "Upgrade A";
+    }
+
+    public virtual string GetUpgradeOptionBText()
+    {
+        return "Upgrade B";
+    }
+
+    public void ApplyUpgradeChoice(int choiceIndex)
+    {
+        if (choiceIndex == 0)
+        {
+            if (!CanUpgradeA())
+            {
+                return;
+            }
+
+            if (!GameManager.Instance.SpendGold(GetUpgradeCostA()))
+            {
+                return;
+            }
+
+            ApplyUpgradeA();
+            upgradeALevel++;
+        }
+        else if (choiceIndex == 1)
+        {
+            if (!CanUpgradeB())
+            {
+                return;
+            }
+
+            if (!GameManager.Instance.SpendGold(GetUpgradeCostB()))
+            {
+                return;
+            }
+
+            ApplyUpgradeB();
+            upgradeBLevel++;
+        }
+    }
+
+    protected virtual void ApplyUpgradeA()
+    {
+    }
+
+    protected virtual void ApplyUpgradeB()
+    {
     }
 
     protected Enemy GetTarget()

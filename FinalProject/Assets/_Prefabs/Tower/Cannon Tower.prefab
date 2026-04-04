@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2634934462014511581}
   - component: {fileID: 5173086231946275935}
   - component: {fileID: 3552785172143154510}
-  m_Layer: 0
-  m_Name: CannonTower_1
+  - component: {fileID: 7599368622914969748}
+  m_Layer: 6
+  m_Name: Cannon Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,6 +74,27 @@ MonoBehaviour:
   splashDamage: 7
   cannonProjectilePrefab: {fileID: 7222945794459315084, guid: 54009b10493c5674690051958bd118fc, type: 3}
   shootPoint: {fileID: 5090692578842076585}
+--- !u!65 &7599368622914969748
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5645802795658541044}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &5090692578842476329
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81,9 +103,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2634934462014511581}
     m_Modifications:
+    - target: {fileID: 100000, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: c750f9054cec93740b96cb359da73074, type: 3}
       propertyPath: m_Name
       value: Tow_Cannon1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: c750f9054cec93740b96cb359da73074, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: c750f9054cec93740b96cb359da73074, type: 3}
       propertyPath: m_LocalPosition.x

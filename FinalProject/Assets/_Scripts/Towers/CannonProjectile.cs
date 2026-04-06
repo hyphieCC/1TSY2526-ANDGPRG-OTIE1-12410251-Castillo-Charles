@@ -5,6 +5,8 @@ public class CannonProjectile : Projectile
     float splashRadius;
     float splashDamage;
 
+    [SerializeField] GameObject explosionEffect;
+
     public void SetCannonProjectile(Enemy target, float damage, float splashRadius, float splashDamage)
     {
         this.target = target;
@@ -20,6 +22,7 @@ public class CannonProjectile : Projectile
             target.TakeDamage(damage);
         }
 
+        Instantiate(explosionEffect, transform.position, Quaternion.identity);
         Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
 
         for (int i = 0; i < enemies.Length; i++)

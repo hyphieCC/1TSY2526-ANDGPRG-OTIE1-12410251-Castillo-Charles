@@ -11,6 +11,8 @@ public class ArrowTower : Tower
 
     protected override void Attack(Enemy target)
     {
+        SoundManager.Instance.PlaySFX3D(SoundManager.SFXType.ArrowShoot, shootPoint.position);
+
         GameObject projectileObj = Instantiate(arrowProjectilePrefab, shootPoint.position, shootPoint.rotation);
         ArrowProjectile arrowProjectile = projectileObj.GetComponent<ArrowProjectile>();
         arrowProjectile.SetProjectile(target, damage);
@@ -37,7 +39,7 @@ public class ArrowTower : Tower
         }
         else if (upgradeALevel == 2)
         {
-            return "+5 Damage";
+            return "+3 Damage";
         }
 
         return "Maxed";
@@ -65,7 +67,7 @@ public class ArrowTower : Tower
         }
         else if (upgradeALevel == 2)
         {
-            damage += 5f;
+            damage += 3f;
         }
     }
 

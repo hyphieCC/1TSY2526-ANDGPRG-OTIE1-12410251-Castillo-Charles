@@ -19,6 +19,8 @@ public class CannonTower : Tower
 
     protected override void Attack(Enemy target)
     {
+        SoundManager.Instance.PlaySFX3D(SoundManager.SFXType.CannonShoot, shootPoint.position);
+
         GameObject projectileObj = Instantiate(cannonProjectilePrefab, shootPoint.position, shootPoint.rotation);
         CannonProjectile cannonProjectile = projectileObj.GetComponent<CannonProjectile>();
         cannonProjectile.SetCannonProjectile(target, damage, splashRadius, splashDamage);

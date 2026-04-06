@@ -19,9 +19,10 @@ public class FireTower : Tower
 
     protected override void Attack(Enemy target)
     {
+        SoundManager.Instance.PlaySFX3D(SoundManager.SFXType.FireShoot, shootPoint.position);
+
         GameObject projectileObj = Instantiate(fireProjectilePrefab, shootPoint.position, shootPoint.rotation);
         FireProjectile fireProjectile = projectileObj.GetComponent<FireProjectile>();
-
         fireProjectile.SetFireProjectile(target, burnDamagePerTick, burnDuration, burnTickInterval);
     }
 
@@ -68,6 +69,7 @@ public class FireTower : Tower
 
     protected override void ApplyUpgradeA()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.SFXType.UpgradeSuccess);
         if (upgradeALevel == 1)
         {
             burnDamagePerTick += 2f;

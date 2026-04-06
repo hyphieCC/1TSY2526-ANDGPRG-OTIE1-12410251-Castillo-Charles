@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FlyingEnemy : Enemy
 {
+    [Header("Flying Enemy Stats")]
     [SerializeField] float speed;
     [SerializeField] float reachDistance;
 

@@ -131,6 +131,8 @@ MonoBehaviour:
   burnTickTimer: 0
   burnDamagePerTick: 0
   burnTickInterval: 1
+  burnEffectPrefab: {fileID: 7973624284534990530, guid: 1c81bf5e5336ec54cbebd54c59422ff3, type: 3}
+  slowEffectPrefab: {fileID: 5585224334059874767, guid: a4689f37096da9f42833d0dfb4bd05a5, type: 3}
   baseMoveSpeed: 3.5
 --- !u!1001 &7566106514163654461
 PrefabInstance:

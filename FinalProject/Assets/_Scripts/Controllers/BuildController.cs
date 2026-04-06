@@ -41,9 +41,11 @@ public class BuildController : MonoBehaviour
 
         if (GameManager.Instance.GetGold() < cost)
         {
+            SoundManager.Instance.PlaySFX(SoundManager.SFXType.CannotClick);
             return;
         }
 
+        SoundManager.Instance.PlaySFX(SoundManager.SFXType.CanClick);
         GameObject tempTowerObj = Instantiate(prefabTower[index], hit.point, Quaternion.identity);
         draggableTower = tempTowerObj;
         tempTower = tempTowerObj.GetComponent<BaseTower>();
@@ -109,7 +111,7 @@ public class BuildController : MonoBehaviour
 
             bool validHeight = hit.point.y > buildOffsetY;
             bool occupied = IsSpotOccupied(snappedPos);
-
+            
             if (Input.GetMouseButtonDown(1))
             {
                 CancelCurrentBuild();
@@ -143,6 +145,11 @@ public class BuildController : MonoBehaviour
             else
             {
                 tempTower.NonBuildable();
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    SoundManager.Instance.PlaySFX(SoundManager.SFXType.CannotClick);
+                }
             }
         }
     }

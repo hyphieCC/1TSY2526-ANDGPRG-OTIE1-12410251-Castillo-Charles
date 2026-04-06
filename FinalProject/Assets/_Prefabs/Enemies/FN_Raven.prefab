@@ -422,6 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlyingEnemy
   enemyType: 1
+  enemySoundType: 2
   maxHp: 5
   currentHp: 0
   coreDamage: 1
@@ -432,6 +433,8 @@ MonoBehaviour:
   burnTickTimer: 0
   burnDamagePerTick: 0
   burnTickInterval: 1
+  burnEffectPrefab: {fileID: 7973624284534990530, guid: 1c81bf5e5336ec54cbebd54c59422ff3, type: 3}
+  slowEffectPrefab: {fileID: 5585224334059874767, guid: a4689f37096da9f42833d0dfb4bd05a5, type: 3}
   speed: 4
   reachDistance: 0.3
 --- !u!54 &2729845025912757996

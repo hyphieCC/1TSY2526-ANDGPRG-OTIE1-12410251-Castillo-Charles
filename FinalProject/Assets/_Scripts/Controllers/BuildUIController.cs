@@ -76,6 +76,7 @@ public class BuildUIController : MonoBehaviour
 
     public void CancelBuild()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.SFXType.CanClick);
         buildController.CancelCurrentBuild();
     }
 

@@ -17,6 +17,7 @@ public class IceProjectile : Projectile
         if (target != null)
         {
             target.ApplySlow(slowMultiplier, slowDuration);
+            target.PlayIceFlash();
         }
 
         Destroy(gameObject);

@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class CoreData
@@ -21,12 +22,18 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] CoreData coreData;
-    [SerializeField] TMP_Text currentWave;
 
     [Header("Gold")]
     [SerializeField] int startingGold = 300;
     [SerializeField] TMP_Text goldText;
     int currentGold;
+
+    [Header("BGM")]
+    [SerializeField] AudioClip levelMusic;
+
+    [Header("End Game UI")]
+    [SerializeField] GameObject losePanel;
+    [SerializeField] GameObject winPanel;
 
     public Transform GetCoreTransform() { return coreData.coreTransform; }
 
@@ -36,18 +43,28 @@ public class GameManager : MonoBehaviour
         coreData.curlife = coreData.maxLife;
         currentGold = startingGold;
 
+        losePanel.SetActive(false);
+        winPanel.SetActive(false);
+
         UpdateLifeBar();
         UpdateGoldUI();
     }
 
+    private void Start()
+    {
+        SoundManager.Instance.PlayMusic(levelMusic);
+    }
+
     public void CoreTakeDamage(int damage)
     {
+        SoundManager.Instance.PlaySFX3D(SoundManager.SFXType.CoreHit, transform.position);
         coreData.curlife -= damage;
         coreData.curlife = Mathf.Max(coreData.curlife, 0);
         UpdateLifeBar();
 
         if (coreData.curlife <= 0)
         {
+            SoundManager.Instance.PlaySFX3D(SoundManager.SFXType.CoreDeath, transform.position);
             GameOver();
         }
     }
@@ -79,7 +96,8 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
-        Debug.Log("GameOver");
+        losePanel.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     void UpdateLifeBar()
@@ -95,8 +113,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UpdateWaveUI(int wave)
+    public void WinGame()
     {
-        currentWave.text = "Wave: " + wave;
+        winPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

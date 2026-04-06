@@ -56,6 +56,7 @@ public abstract class Tower : MonoBehaviour
     public void BuildTower()
     {
         isBuilt = true;
+        SoundManager.Instance.PlaySFX(SoundManager.SFXType.BuildSuccess);
     }
 
     private void OnMouseDown()
@@ -143,9 +144,11 @@ public abstract class Tower : MonoBehaviour
 
             if (!GameManager.Instance.SpendGold(GetUpgradeCostA()))
             {
+                SoundManager.Instance.PlaySFX(SoundManager.SFXType.CannotClick);
                 return;
             }
 
+            SoundManager.Instance.PlaySFX(SoundManager.SFXType.UpgradeSuccess);
             ApplyUpgradeA();
             upgradeALevel++;
         }
@@ -158,9 +161,11 @@ public abstract class Tower : MonoBehaviour
 
             if (!GameManager.Instance.SpendGold(GetUpgradeCostB()))
             {
+                SoundManager.Instance.PlaySFX(SoundManager.SFXType.CannotClick);
                 return;
             }
 
+            SoundManager.Instance.PlaySFX(SoundManager.SFXType.UpgradeSuccess);
             ApplyUpgradeB();
             upgradeBLevel++;
         }

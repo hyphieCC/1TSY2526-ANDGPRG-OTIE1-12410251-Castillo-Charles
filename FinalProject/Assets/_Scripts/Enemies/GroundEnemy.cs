@@ -4,6 +4,7 @@ using UnityEngine.AI;
 public class GroundEnemy : Enemy
 {
     NavMeshAgent agent;
+    [Header("Ground Enemy Stats")]
     [SerializeField] float baseMoveSpeed = 3.5f;
 
     protected virtual void Awake()

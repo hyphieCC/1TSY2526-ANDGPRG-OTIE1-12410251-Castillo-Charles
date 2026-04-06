@@ -46,6 +46,7 @@ public class UpgradeUIController : MonoBehaviour
 
     public void ShowUpgradeUI(Tower tower)
     {
+        SoundManager.Instance.PlaySFX(SoundManager.SFXType.CanClick);
         currentTower = tower;
         upgradePanel.SetActive(true);
 
@@ -55,6 +56,7 @@ public class UpgradeUIController : MonoBehaviour
 
     public void HideUpgradeUI()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.SFXType.CanClick);
         currentTower = null;
         upgradePanel.SetActive(false);
     }
@@ -123,6 +125,7 @@ public class UpgradeUIController : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.PlaySFX(SoundManager.SFXType.CanClick);
         selectedUpgradeIndex = 0;
 
         upgradeAImage.color = selectedColor;
@@ -139,6 +142,7 @@ public class UpgradeUIController : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.PlaySFX(SoundManager.SFXType.CanClick);
         selectedUpgradeIndex = 1;
 
         upgradeBImage.color = selectedColor;
@@ -155,6 +159,7 @@ public class UpgradeUIController : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.PlaySFX(SoundManager.SFXType.CanClick);
         currentTower.ApplyUpgradeChoice(selectedUpgradeIndex);
 
         RefreshUI();

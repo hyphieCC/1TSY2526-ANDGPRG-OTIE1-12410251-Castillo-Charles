@@ -12,9 +12,10 @@ public class IceTower : Tower
 
     protected override void Attack(Enemy target)
     {
+        SoundManager.Instance.PlaySFX3D(SoundManager.SFXType.IceShoot, shootPoint.position);
+
         GameObject projectileObj = Instantiate(iceProjectilePrefab, shootPoint.position, shootPoint.rotation);
         IceProjectile iceProjectile = projectileObj.GetComponent<IceProjectile>();
-
         iceProjectile.SetIceProjectile(target, slowMultiplier, slowDuration);
     }
 
@@ -61,6 +62,7 @@ public class IceTower : Tower
 
     protected override void ApplyUpgradeA()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.SFXType.UpgradeSuccess);
         if (upgradeALevel == 1)
         {
             slowMultiplier -= 0.1f;

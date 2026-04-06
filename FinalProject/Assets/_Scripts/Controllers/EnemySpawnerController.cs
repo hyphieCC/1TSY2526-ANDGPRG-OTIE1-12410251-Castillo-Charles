@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using TMPro;
+using UnityEngine.UI;
 
 public class EnemySpawnerController : MonoBehaviour
 {
@@ -22,9 +24,15 @@ public class EnemySpawnerController : MonoBehaviour
     [SerializeField] int bossWaveInterval;
     [SerializeField] float hpIncreasePerWave;
 
+    [Header("Wave UI")]
+    [SerializeField] TMP_Text waveText;
+    [SerializeField] Image waveProgressFill;
+
     int currentWave = 0;
     int activeEnemies = 0;
     bool isSpawningWave = false;
+    int totalEnemiesThisWave = 0;
+    int clearedEnemiesThisWave = 0;
 
     private void Awake()
     {
@@ -41,11 +49,21 @@ public class EnemySpawnerController : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenWaves);
 
         currentWave++;
-        GameManager.Instance.UpdateWaveUI(currentWave);
         isSpawningWave = true;
 
+        clearedEnemiesThisWave = 0;
         int enemiesLeftToSpawn = baseEnemiesPerWave + (currentWave - 1) * 2;
+        totalEnemiesThisWave = enemiesLeftToSpawn;
+
+        if (currentWave % bossWaveInterval == 0)
+        {
+            totalEnemiesThisWave++;
+        }
+
         float hpMultiplier = 1f + (currentWave - 1) * hpIncreasePerWave;
+
+        UpdateWaveUI();
+        UpdateWaveProgressBar();
 
         while (enemiesLeftToSpawn > 0)
         {
@@ -111,10 +129,20 @@ public class EnemySpawnerController : MonoBehaviour
     public void EnemyRemoved()
     {
         activeEnemies--;
+        clearedEnemiesThisWave++;
+
+        UpdateWaveProgressBar();
 
         if (activeEnemies <= 0 && isSpawningWave == false)
         {
-            StartCoroutine(StartNextWave());
+            if (currentWave >= 20)
+            {
+                GameManager.Instance.WinGame();
+            }
+            else
+            {
+                StartCoroutine(StartNextWave());
+            }
         }
     }
 
@@ -134,5 +162,21 @@ public class EnemySpawnerController : MonoBehaviour
     public int GetCurrentWave()
     {
         return currentWave;
+    }
+
+    void UpdateWaveUI()
+    {
+        if (waveText != null)
+        {
+            waveText.text = "Wave " + currentWave;
+        }
+    }
+
+    void UpdateWaveProgressBar()
+    {
+        if (waveProgressFill != null && totalEnemiesThisWave > 0)
+        {
+            waveProgressFill.fillAmount = (float)clearedEnemiesThisWave / totalEnemiesThisWave;
+        }
     }
 }

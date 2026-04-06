@@ -4,6 +4,8 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] protected float moveSpeed = 12f;
 
+    [SerializeField] SoundManager.SFXType hitSound;
+
     protected Enemy target;
     protected float damage;
 
@@ -37,6 +39,7 @@ public class Projectile : MonoBehaviour
     protected virtual void HitTarget()
     {
         target.TakeDamage(damage);
+        SoundManager.Instance.PlaySFX3D(hitSound, transform.position);
         Destroy(gameObject);
     }
 }
